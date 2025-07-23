@@ -4,7 +4,8 @@ sequenceDiagram
     participant palvelin
 
     selain->>palvelin: POST new_note, tekstikenttään syötetty tieto
-    palvelin->>selain: GET notes
+    selain->>palvelin: GET notes.html
+    palvelin->>selain: notes.html
     selain->>palvelin: GET main.css
     palvelin->>selain: main.css
     selain->>palvelin: GET main.js
