@@ -19,6 +19,34 @@ const MostVotes = ({anecdotes, mostVotes, votes}) => {
   )
 }
 
+const AnecdoteOfTheDay = ({anecdotes, selected}) => {
+  return (
+    <>
+      <h1>Anecdote of the day</h1>
+      <div>
+        {anecdotes[selected]}
+      </div>
+    </>
+  )
+}
+
+const VoteButton = ({handleVote}) => {
+  return (
+    <>
+      <button onClick={handleVote}>vote</button>
+    </>
+  )
+}
+
+const NextAnecdote = ({handleNext}) => {
+  return (
+    <>
+      <button onClick={handleNext}>next anecdote</button>
+    </>
+  )
+}
+
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -52,19 +80,15 @@ const App = () => {
 
   function handleMostVotes() {
     const mostVotes = Math.max(...votes)
-    console.log(mostVotes)
     setMostVotes(votes.indexOf(mostVotes))
   }
   
   return (
     <>
-      <h1>Anecdote of the day</h1>
-      <div>
-        {anecdotes[selected]}
-      </div>
+      <AnecdoteOfTheDay anecdotes={anecdotes} selected={selected} ></AnecdoteOfTheDay>
       <AnecdoteVotes votes={votes} selected={selected}></AnecdoteVotes>
-      <button onClick={handleVote}>vote</button>
-      <button onClick={handleNextAnecdoteClick}>next anecdote</button>
+      <VoteButton handleVote={handleVote}></VoteButton>
+      <NextAnecdote handleNext={handleNextAnecdoteClick}></NextAnecdote>
       <MostVotes anecdotes={anecdotes} mostVotes={mostVotes} votes={votes}></MostVotes>
     </>
   )
