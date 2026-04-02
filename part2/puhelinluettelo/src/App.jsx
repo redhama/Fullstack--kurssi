@@ -62,6 +62,10 @@ const App = () => {
       if (personToBeFound){
         if (window.confirm(`${personObject.name} is already added to phonebook, replace the old number with a new one?`)) {
           personService.update(personToBeFound.id, personObject)
+          .catch(error => {
+            setNotificationColor('red')
+            setErrorMessage(`${error.response.data.error}`)
+          })
           const newPersons = [...persons]
           newPersons[personIndex] = personObject
         
@@ -77,13 +81,19 @@ const App = () => {
       } else {
         personService.create(personObject)
         .then(returnedPerson => 
-          {const newPersons = persons.concat(returnedPerson)
-          updatePersons(newPersons)})
-          setNotificationColor('green')
-          setErrorMessage(`Added ${personObject.name}`)
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000)
+        {
+          const newPersons = persons.concat(returnedPerson)
+          updatePersons(newPersons)
+        })
+        .catch(error => {
+          setNotificationColor('red')
+          setErrorMessage(`${error.response.data.error}`)
+        })
+        setNotificationColor('green')
+        setErrorMessage(`Added ${personObject.name}`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
         setNewName('')
         setNewNumber('')
       }
